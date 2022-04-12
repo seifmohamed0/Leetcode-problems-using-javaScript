@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} target
+ * @param {number} k
+ * @return {number[]}
+ */
+var distanceK = function(root, target, k) {
+    const parent = new Map();
+    function traverse(node , par){
+        if(!node)
+            return ;
+        parent.set(node ,par);
+        traverse(node.left , node);
+        traverse(node.right , node);
+        return ;
+    }
+    traverse(root , root);
+    const vis = new Set();
+    const ret = [];
+    function get_ans(node , d){
+        if(!node || vis.has(node)){
+            return ;
+        }
+        vis.add(node);
+        if(d == k){
+            ret.push(node.val);
+        }
+        get_ans(parent.get(node) , d + 1);
+        get_ans(node.left , d + 1);
+        get_ans(node.right , d + 1);
+        return;
+    }
+    get_ans(target , 0);
+    return ret;
+};
