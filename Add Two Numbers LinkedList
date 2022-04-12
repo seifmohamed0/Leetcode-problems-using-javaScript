@@ -1,0 +1,34 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    let rem = 0;
+    const root = new ListNode(null);
+    let lastNode = root;
+    while(l1 || l2 || rem ){
+        if(l1){
+            rem += l1.val;
+            l1 = l1.next;
+        }
+        if(l2){
+            rem += l2.val;
+            l2 =l2.next;
+        }
+        console.log(rem);
+        const node = new ListNode(rem % 10);
+        lastNode.next = node;
+        lastNode = node;
+        if(rem > 9)rem = 1;
+        else rem =0;
+    }
+    return root.next;
+};
